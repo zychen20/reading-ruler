@@ -138,7 +138,6 @@ class Ruler {
 
         // Make sure the ruler is visible.
         this.activate();
-        this.show();
 
         // Position the ruler.
         inflateRect(rowBounds, Ruler.PADDING.x, Ruler.PADDING.y);

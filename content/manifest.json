@@ -1,12 +1,13 @@
 {
   "manifest_version": 2,
-  "name": "Reading Ruler",
+  "name": "__MSG_extensionName__",
   "version": "1.4",
-  "description": "Highlights the row of text you are reading.",
+  "description": "__MSG_extensionDescription__",
   "developer": {
     "name": "Oren Trutner",
     "url": "https://github.com/orentrutner/reading-ruler"
   },
+  "default_locale": "en",
 
   "permissions": [ "storage", "tabs" ],
 

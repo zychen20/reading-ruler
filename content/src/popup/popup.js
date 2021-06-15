@@ -31,6 +31,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const options = new Options(tab.url);
     await options.read();
 
+    // Load strings
+    document.getElementById('popupHeading').innerHTML = browser.i18n.getMessage('extensionName');
+    document.getElementById('colorHeading').innerHTML = browser.i18n.getMessage('colorHeading');
+    document.getElementById('opacityHeading').innerHTML = browser.i18n.getMessage('opacityHeading');
+    document.getElementById('whenToShowHeading').innerHTML = browser.i18n.getMessage('whenToShowHeading');
+    document.getElementById('enableForPageText').innerHTML = browser.i18n.getMessage('showOnThisPage');
+    document.getElementById('enableForDomainText').innerHTML = browser.i18n.getMessage('showOnAllPagesOf', options.host);
+
     // Initialize and react to changes on the color chooser.
     const colorButtons = document.getElementById('colorButtons');
     for (let color of COLORS) {
