@@ -90,11 +90,12 @@ class Ruler {
         // Create and initialize a new visualizer to match the new appearance.
         this.visualizer = Ruler.VISUALIZER_BY_APPEARANCE[newAppearance] || Ruler.VISUALIZER_BY_APPEARANCE["ruler"];
         this.visualizer.setColor(this.options.color);
-        this.visualizer.setOpacity(this.options.opacity);
 
         // Show and position the new visualizer.
         this.show();
         this.positionAtLatest();
+
+        this.visualizer.setOpacity(this.options.opacity);
     }
 
     /** Sets the ruler's color. */

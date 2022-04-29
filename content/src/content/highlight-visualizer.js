@@ -24,7 +24,7 @@ class HighlightVisualizer {
         const RULER_ID = PREFIX + 'ruler';
 
         this.opacity = 0.2;
-        this.isVisible = false;
+        this.isVisible = true;
 
         this.element = document.getElementById(RULER_ID)
         if (!this.element) {
@@ -33,6 +33,8 @@ class HighlightVisualizer {
             this.element.className = RULER_ID;
             document.body.appendChild(this.element);
         }
+
+        this.hide();
     }
 
     /** Shows the ruler. */

@@ -25,7 +25,7 @@ class NegativeVisualizer {
         const BOTTOM_ID = PREFIX + 'bottom';
 
         this.opacity = 0.2;
-        this.overlayVisible = false;
+        this.overlayVisible = true;
         this.rulerVisible = false;
 
         this.topElement = document.getElementById(TOP_ID)
@@ -43,6 +43,8 @@ class NegativeVisualizer {
             this.bottomElement.className = BOTTOM_ID;
             document.body.appendChild(this.bottomElement);
         }
+
+        this.hide();
     }
 
     /** Checks if the ruler should be visible in its current state. */

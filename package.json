@@ -13,16 +13,19 @@
     "start": "web-ext run --source-dir=content --url=https://github.com/orentrutner/reading-ruler"
   },
   "devDependencies": {
+    "@types/download": "^8.0.1",
+    "body-parser": "1.19.1",
     "cpx": "^1.5.0",
-    "web-ext": "^6.1.0",
-      "@types/download": "^6.2.4",
-      "body-parser": "^1.19.0",
-      "download": "^8.0.0",
-      "express": "^4.17.1",
-      "safe-compare": "^1.1.4",
-    "webextension-polyfill": "^0.8.0"
+    "download": "^8.0.0",
+    "express": "4.17.2",
+    "safe-compare": "^1.1.4",
+    "web-ext": "^6.8.0",
+    "webextension-polyfill": "^0.9.0"
   },
   "resolutions": {
+    "ws": "^7.4.6"
+  },
+  "dependencies": {
     "ws": "^7.4.6"
   }
 }
