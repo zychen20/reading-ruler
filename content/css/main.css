@@ -17,7 +17,7 @@
  * along with Reading Ruler.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-.--reading-ruler-ruler, .--reading-ruler-top, .--reading-ruler-bottom {
+.--reading-ruler-ruler, .--reading-ruler-top, .--reading-ruler-mask, .--reading-ruler-bottom {
     opacity: 0;
 
     position: fixed;
@@ -32,6 +32,6 @@
     border-radius: 4px;
 }
 
-.--reading-ruler-top, .--reading-ruler-bottom {
+.--reading-ruler-top, .--reading-ruler-mask, .--reading-ruler-bottom {
     background-color: black;
 }

@@ -136,6 +136,7 @@ class Ruler {
             this.stash();
             return;
         }
+        roundRect(rowBounds);
 
         // Make sure the ruler is visible.
         this.activate();

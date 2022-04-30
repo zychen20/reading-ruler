@@ -22,6 +22,7 @@ class NegativeVisualizer {
     constructor() {
         const PREFIX = '--reading-ruler-';
         const TOP_ID = PREFIX + 'top';
+        const MASK_ID = PREFIX + 'mask';
         const BOTTOM_ID = PREFIX + 'bottom';
 
         this.opacity = 0.2;
@@ -34,6 +35,14 @@ class NegativeVisualizer {
             this.topElement.id = TOP_ID;
             this.topElement.className = TOP_ID;
             document.body.appendChild(this.topElement);
+        }
+
+        this.maskElement = document.getElementById(MASK_ID);
+        if (!this.maskElement) {
+            this.maskElement = document.createElement('div');
+            this.maskElement.id = MASK_ID;
+            this.maskElement.className = MASK_ID;
+            document.body.append(this.maskElement);
         }
 
         this.bottomElement = document.getElementById(BOTTOM_ID)
@@ -56,6 +65,7 @@ class NegativeVisualizer {
     show() {
         if (!this.overlayVisible) {
             this.topElement.style.opacity = this.opacity;
+            this.maskElement.style.opacity = 0;
             this.bottomElement.style.opacity = this.opacity;
 
             this.overlayVisible = true;
@@ -66,6 +76,7 @@ class NegativeVisualizer {
     hide() {
         if (this.overlayVisible) {
             this.topElement.style.opacity = 0;
+            this.maskElement.style.opacity = 0;
             this.bottomElement.style.opacity = 0;
 
             this.overlayVisible = false;
@@ -75,18 +86,9 @@ class NegativeVisualizer {
     /** Temporarily hides the ruler. */
     stash() {
         this.topElement.style.opacity = this.opacity;
+        this.maskElement.style.opacity = this.opacity;
         this.bottomElement.style.opacity = this.opacity;
         this.rulerVisible = false;
-
-        if (this.lastPosition) {
-            const y = this.lastPosition.y + this.lastPosition.height / 2;
-            this.positionAt({
-                x: this.lastPosition.x,
-                y: y,
-                width: this.lastPosition.width,
-                height: 0
-            });
-        }
     }
 
     /** Sets the ruler's color. */
@@ -99,23 +101,30 @@ class NegativeVisualizer {
         this.opacity = newOpacity;
         if (this.overlayVisible) {
             this.topElement.style.opacity = newOpacity;
+            this.maskElement.style.opacity = newOpacity;
             this.bottomElement.style.opacity = newOpacity;
         }
     }
 
     /** Position and size the ruler to cover a specific rectangle. */
     positionAt(rect) {
-        const inflatedRect = { ...rect };
+        const widthPx = window.innerWidth + 'px';
 
         this.topElement.style.left = '0px';
         this.topElement.style.top = '0px';
-        this.topElement.style.width = window.innerWidth + 'px';
-        this.topElement.style.height = Math.round(inflatedRect.y) + 'px';
+        this.topElement.style.width = widthPx;
+        this.topElement.style.height = rect.y + 'px';
+
+        this.maskElement.style.left = '0px';
+        this.maskElement.style.top = rect.y + 'px';
+        this.maskElement.style.width = widthPx;
+        this.maskElement.style.height = rect.height + 'px';
+        this.maskElement.style.opacity = 0;
 
         this.bottomElement.style.left = '0px';
-        this.bottomElement.style.top = Math.round(inflatedRect.y + inflatedRect.height) + 'px';
-        this.bottomElement.style.width = window.innerWidth + 'px';
-        this.bottomElement.style.height = Math.round(window.innerHeight - inflatedRect.y - inflatedRect.height) + 'px';
+        this.bottomElement.style.top = (rect.y + rect.height) + 'px';
+        this.bottomElement.style.width = widthPx;
+        this.bottomElement.style.height = (window.innerHeight - rect.y - rect.height) + 'px';
 
         this.rulerVisible = true;
         this.lastPosition = rect;

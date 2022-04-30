@@ -50,3 +50,11 @@ function inflateRect(rect, x, y) {
     rect.width += 2 * x;
     rect.height += 2 * y;
 }
+
+/** Rounds the coordinates of a rectangle, in place. */
+function roundRect(rect) {
+    rect.x = Math.round(rect.x);
+    rect.y = Math.round(rect.y);
+    rect.width = Math.round(rect.width);
+    rect.height = Math.round(rect.height);
+}
