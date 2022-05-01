@@ -23,11 +23,12 @@
  * highlight the row of text underneath it.
  */
 class Ruler {
-    constructor() {
+    constructor(visualizer = null) {
         this.enabled = false;   // enabled unless the user turned it off
         this.active = false;    // temporarily inactive when the mouse exits the window
         this.appearance = 'ruler';
-        this.visualizer = new HighlightVisualizer();
+        this.forcedVisualizer = visualizer;
+        this.visualizer = visualizer || new HighlightVisualizer();
         this.latestRowBounds = null;
         this.latestPosition = null;
         this.options = {};
@@ -88,7 +89,7 @@ class Ruler {
         }
 
         // Create and initialize a new visualizer to match the new appearance.
-        this.visualizer = Ruler.VISUALIZER_BY_APPEARANCE[newAppearance] || Ruler.VISUALIZER_BY_APPEARANCE["ruler"];
+        this.visualizer = this.forcedVisualizer || Ruler.VISUALIZER_BY_APPEARANCE[newAppearance] || Ruler.VISUALIZER_BY_APPEARANCE["ruler"];
         this.visualizer.setColor(this.options.color);
 
         // Show and position the new visualizer.

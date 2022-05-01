@@ -25,8 +25,10 @@
  * under the mouse cursor every time the mouse moves or the page scrolls.
  */
 (function() {
+    const isInsideIframe = window.self !== window.top;
+
     // Create the ruler.
-    const ruler = new Ruler();
+    const ruler = new Ruler(isInsideIframe ? new IframeVisualizer() : null);
 
     // Track state.
     const mousePosition = { x: 0, y: 0 };
@@ -34,13 +36,13 @@
     // React to messages from the background and popup scripts.
     browser.runtime.onMessage.addListener(message => {
         switch (message.command) {
-            case 'activate':
+            case EXTENSION_COMMANDS.activate:
                 ruler.activate();
                 break;
-            case 'deactivate':
+            case EXTENSION_COMMANDS.deactivate:
                 ruler.deactivate();
                 break;
-            case 'options':
+            case EXTENSION_COMMANDS.options:
                 ruler.enableIf(message.enabled);
                 ruler.setAppearance(message.appearance);
                 ruler.setColor(message.color);
@@ -49,7 +51,31 @@
             default:
                 break;
         }
+    });
 
+    // React to messages from iframes
+    window.addEventListener('message', e => {
+        switch (e.data && e.data.command) {
+            case WINDOW_COMMANDS.show:
+                ruler.show();
+                break;
+            case WINDOW_COMMANDS.hide:
+                ruler.hide();
+                break;
+            case WINDOW_COMMANDS.stash:
+                ruler.stash();
+                break;
+            case WINDOW_COMMANDS.positionAt:
+                const frame = frameFromWindow(e.source);
+                const rect = translatedRect(
+                    e.data.rect,
+                    frame.offsetLeft - window.scrollX,
+                    frame.offsetTop - window.scrollY);
+                ruler.positionAt(rect);
+                break;
+            default:
+                break;
+        }
     });
 
     // Reposition the ruler when the mouse moves.

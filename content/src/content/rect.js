@@ -43,6 +43,17 @@ function rectContains(rect, x, y) {
     return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height;
 }
 
+function translateRect(rect, x, y) {
+    rect.x += x;
+    rect.y += y;
+}
+
+function translatedRect(rect, x, y) {
+    const translated = { ...rect };
+    translateRect(translated, x, y);
+    return translated;
+}
+
 /** Increases the size of a rectangle, in place, by a given amount. */
 function inflateRect(rect, x, y) {
     rect.x -= x;

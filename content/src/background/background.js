@@ -55,7 +55,7 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 // Respond to messages from the options popup.
 browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     switch(message.command) {
-        case 'options':
+        case EXTENSION_COMMANDS.options:
             await updateIcon(message.enabled);
             break;
         default:

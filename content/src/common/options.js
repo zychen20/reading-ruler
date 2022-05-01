@@ -56,7 +56,7 @@ class Options {
     /** Broadcasts the option values throughout the add-on. */
     async broadcast() {
         await broadcast({
-            command: 'options',
+            command: EXTENSION_COMMANDS.options,
             enabled: this.enabled,
             appearance: this.appearance,
             color: COLORS.find(color => color.name === this.colorName).hex,

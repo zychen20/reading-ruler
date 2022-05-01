@@ -27,9 +27,7 @@ async function getCurrentTab() {
 
 /** Broadcasts a message throughout the add-on. */
 async function broadcast(message) {
-    const normalizedMessage = typeof message === 'string'
-        ? { command: message }
-        : message;
+    const normalizedMessage = normalizeMessage(message);
 
     // Send the message to the background and popup scripts.
     try { await browser.runtime.sendMessage(normalizedMessage); }
@@ -41,4 +39,10 @@ async function broadcast(message) {
         try { await browser.tabs.sendMessage(tabId, normalizedMessage); }
         catch (exception) { /* ignore any failures to receive */ }
     }
+}
+
+function normalizeMessage(message) {
+    return typeof message === 'string'
+        ? { command: message }
+        : message;
 }

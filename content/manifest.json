@@ -32,6 +32,7 @@
     "scripts": [
       "src/polyfills/browser-polyfill.min.js",
       "src/common/colors.js",
+      "src/common/commands.js",
       "src/common/extension.js",
       "src/common/options.js",
       "src/background/background.js"
@@ -43,11 +44,15 @@
     "css": ["css/main.css"],
     "js": [
       "src/polyfills/browser-polyfill.min.js",
+      "src/common/commands.js",
+      "src/common/extension.js",
       "src/content/range.js",
       "src/content/rect.js",
       "src/content/polyfills.js",
+      "src/content/dom.js",
       "src/content/caret.js",
       "src/content/highlight-visualizer.js",
+      "src/content/iframe-visualizer.js",
       "src/content/negative-visualizer.js",
       "src/content/ruler.js",
       "src/content/main.js"
