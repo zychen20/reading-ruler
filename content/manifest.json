@@ -44,8 +44,10 @@
     "css": ["css/main.css"],
     "js": [
       "src/polyfills/browser-polyfill.min.js",
+      "src/common/colors.js",
       "src/common/commands.js",
       "src/common/extension.js",
+      "src/common/options.js",
       "src/content/range.js",
       "src/content/rect.js",
       "src/content/polyfills.js",

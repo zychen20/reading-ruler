@@ -29,6 +29,11 @@ class Options {
         return this.domainEnabled && this.pageEnabled;
     }
 
+    /** Gets the hex value of the ruler color. */
+    get color() {
+        return COLORS.find(color => color.name === this.colorName).hex;
+    }
+
     /** Reads the options from local storage. */
     async read() {
         this.domainEnabled = !!await this.readValue(this.host, true);
@@ -36,9 +41,6 @@ class Options {
         this.appearance = await this.readValue('appearance', 'ruler');
         this.colorName = await this.readValue('colorName', COLORS[0].name);
         this.opacity = await this.readValue('opacity', 0.2);
-
-        // Broadcast the option values throughout the add-on.
-        await this.broadcast();
     }
 
     /** Writes the options to local storage. */
@@ -57,11 +59,18 @@ class Options {
     async broadcast() {
         await broadcast({
             command: EXTENSION_COMMANDS.options,
+            ...this.snap()
+        });
+    }
+
+    /** Creates and returns a snapshot of the option value. */
+    snap() {
+        return {
             enabled: this.enabled,
             appearance: this.appearance,
-            color: COLORS.find(color => color.name === this.colorName).hex,
+            color: this.color,
             opacity: this.opacity
-        });
+        };
     }
 
     /** Reads a single value from local storage. */

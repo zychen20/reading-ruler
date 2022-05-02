@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const tab = await getCurrentTab();
     const options = new Options(tab.url);
     await options.read();
+    await options.broadcast();
 
     // Load strings
     document.getElementById('popupHeading').innerText = browser.i18n.getMessage('extensionName');

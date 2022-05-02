@@ -24,8 +24,12 @@
  * It creates a single ruler and sets up event handlers to highlight the row
  * under the mouse cursor every time the mouse moves or the page scrolls.
  */
-(function() {
+(async function() {
+    // Bail out if it looks like we're inside an advertising tracking frame.
     const isInsideIframe = window.self !== window.top;
+    if (isInsideIframe && window.innerWidth <= 100 || window.innerHeight <= 100) {
+        return;
+    }
 
     // Create the ruler.
     const ruler = new Ruler(isInsideIframe ? new IframeVisualizer() : null);
@@ -43,10 +47,7 @@
                 ruler.deactivate();
                 break;
             case EXTENSION_COMMANDS.options:
-                ruler.enableIf(message.enabled);
-                ruler.setAppearance(message.appearance);
-                ruler.setColor(message.color);
-                ruler.setOpacity(message.opacity);
+                ruler.applyOptions(message);
                 break;
             default:
                 break;
@@ -105,4 +106,9 @@
         }
     });
     window.addEventListener('click', e => ruler.activate());
+
+    // Enable and style the ruler based on page options.
+    const options = new Options(window.location.href);
+    await options.read();
+    ruler.applyOptions(options.snap());
 })();

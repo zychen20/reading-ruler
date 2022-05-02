@@ -36,6 +36,14 @@ class Ruler {
 
     // Public methods
 
+    /** Applies a snapshot of an Options object. */
+    applyOptions(optionsSnapshot) {
+        this.enableIf(optionsSnapshot.enabled);
+        this.setAppearance(optionsSnapshot.appearance);
+        this.setColor(optionsSnapshot.color);
+        this.setOpacity(optionsSnapshot.opacity);
+    }
+
     /** Enables or disables the ruler, based on the given input. */
     enableIf(enable) {
         if (enable) {
