@@ -32,12 +32,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     await options.read();
 
     // Load strings
-    document.getElementById('popupHeading').innerHTML = browser.i18n.getMessage('extensionName');
-    document.getElementById('colorHeading').innerHTML = browser.i18n.getMessage('colorHeading');
-    document.getElementById('opacityHeading').innerHTML = browser.i18n.getMessage('opacityHeading');
-    document.getElementById('whenToShowHeading').innerHTML = browser.i18n.getMessage('whenToShowHeading');
-    document.getElementById('enableForPageText').innerHTML = browser.i18n.getMessage('showOnThisPage');
-    document.getElementById('enableForDomainText').innerHTML = browser.i18n.getMessage('showOnAllPagesOf', options.host);
+    document.getElementById('popupHeading').innerText = browser.i18n.getMessage('extensionName');
+    document.getElementById('colorHeading').innerText = browser.i18n.getMessage('colorHeading');
+    document.getElementById('opacityHeading').innerText = browser.i18n.getMessage('opacityHeading');
+    document.getElementById('whenToShowHeading').innerText = browser.i18n.getMessage('whenToShowHeading');
+    document.getElementById('enableForPageText').innerText = browser.i18n.getMessage('showOnThisPage');
+    document.getElementById('enableForDomainText').innerText = browser.i18n.getMessage('showOnAllPagesOf', options.host);
 
     // Initialize and react to changes on the color chooser.
     const colorButtons = document.getElementById('colorButtons');
@@ -53,7 +53,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         const label = document.createElement('label');
         label.htmlFor = input.id;
         label.style = `background-color: ${color.hex};`;
-        label.innerHTML = color.icon ? `<img src="${color.icon}" width="30" height="30">` : ' ';
+        if (color.icon) {
+            const image = document.createElement('img');
+            image.src = color.icon;
+            image.width = 30;
+            image.height = 30;
+            label.appendChild(image);
+        } else {
+            label.innerText = ' ';
+        }
         label.addEventListener('click', async e => {
             options.colorName = e.target.previousSibling.value;
             options.appearance = color.appearance;
