@@ -21,6 +21,7 @@
     opacity: 0;
 
     position: fixed;
+    max-width: none;    /* Don't let the page override the size of the ruler. */
     z-index: 2147483647;
 
     pointer-events: none;
