@@ -17,11 +17,50 @@
  * along with Reading Ruler.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@media (prefers-color-scheme: light) {
+    body {
+        background: #f9f9fb;
+        color: #445;
+    }
+
+    h1, h2, h3, h4 {
+        color: black;
+    }
+
+    .color-radio input[type="radio"]:hover + label,
+    .color-radio input[type="radio"]:checked + label {
+        border-color: black;
+    }
+
+    div.checkbox span:hover {
+        color: black;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background: #333;
+        color: #ddd;
+    }
+
+    h1, h2, h3, h4 {
+        color: white;
+    }
+
+    .color-radio input[type="radio"]:hover + label,
+    .color-radio input[type="radio"]:checked + label {
+        border-color: white;
+    }
+
+    div.checkbox span:hover {
+        color: white;
+    }
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 13px;
     font-weight: 400;
-    color: #0c0c0d;
     margin: 24px;
     user-select: none;
 }
@@ -83,7 +122,8 @@ h4 {
     height: 32px;
     margin: 0 6px 0 0;
     transform: translate(-1px, 1px);
-    border: 1px solid black;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .color-radio input[type="radio"]:checked + label {
@@ -91,7 +131,8 @@ h4 {
     height: 36px;
     margin: 0 2px 0 0;
     transform: translate(-3px, 3px);
-    border: 3px solid black;
+    border-style: solid;
+    border-width: 3px;
 }
 
 #opacitySlider {
