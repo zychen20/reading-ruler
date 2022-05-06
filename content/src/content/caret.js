@@ -56,7 +56,7 @@ function caretAtOrNear(x, y, sampleCount) {
                 nearestCaretDistance = nextCaretDistance;
             } else if (nearestCaret) {
                 // No getting any closer?  The remaining sample points won't get
-                // use any closer either.  Return the nearest caret so far.
+                // us any closer either.  Return the nearest caret so far.
                 return nearestCaret;
             }
         }

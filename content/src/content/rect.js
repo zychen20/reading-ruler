@@ -43,11 +43,13 @@ function rectContains(rect, x, y) {
     return x >= rect.x && x <= rect.x + rect.width && y >= rect.y && y <= rect.y + rect.height;
 }
 
+/** Translates the rect, in place, by a given offset. */
 function translateRect(rect, x, y) {
     rect.x += x;
     rect.y += y;
 }
 
+/** Gets a translated copy of the given rect. */
 function translatedRect(rect, x, y) {
     const translated = { ...rect };
     translateRect(translated, x, y);

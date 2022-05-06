@@ -106,7 +106,7 @@ class NegativeVisualizer {
         }
     }
 
-    /** Position and size the ruler to cover a specific rectangle. */
+    /** Positions and sizes the ruler to cover a specific rectangle. */
     positionAt(rect) {
         const widthPx = window.innerWidth + 'px';
 

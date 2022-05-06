@@ -25,7 +25,7 @@
  * under the mouse cursor every time the mouse moves or the page scrolls.
  */
 (async function() {
-    // Bail out if it looks like we're inside an advertising tracking frame.
+    // Bail out if it looks like we're inside an advertising tracking iframe.
     const isInsideIframe = window.self !== window.top;
     if (isInsideIframe && window.innerWidth <= 100 || window.innerHeight <= 100) {
         return;
@@ -54,7 +54,7 @@
         }
     });
 
-    // React to messages from iframes
+    // React to messages from iframes.
     window.addEventListener('message', e => {
         switch (e.data && e.data.command) {
             case WINDOW_COMMANDS.show:

@@ -19,8 +19,7 @@
 
 /**
  * Represents a "ruler" that highlights a row of text.
- * A ruler uses a single absolutely-positioned, semi-transparent DOM element to
- * highlight the row of text underneath it.
+ * A ruler uses a visualizer object to do the actual highlighting.
  */
 class Ruler {
     constructor(visualizer = null) {
@@ -120,7 +119,7 @@ class Ruler {
     }
 
     /**
-     * Position and show the ruler on the text row around a mouse coordinate.
+     * Positions and shows the ruler on the text row around a mouse coordinate.
      * As a performance optimization, only makes a change if the coordinate
      * exited the previously highlighted row.
      */
@@ -132,7 +131,9 @@ class Ruler {
         this.positionAround(x, y)
     }
 
-    /** Position and show the ruler on the text row around a mouse coordinate. */
+    /**
+     * Positions and shows the ruler on the text row around a mouse coordinate.
+     */
     positionAround(x, y) {
         // Do nothing if disabled.
         if (!this.enabled) {
@@ -157,26 +158,26 @@ class Ruler {
 
     // Private methods
 
-    /** Show the ruler. */
+    /** Shows the ruler. */
     show() {
         if (this.isVisible()) {
             this.visualizer.show();
         }
     }
 
-    /** Hide the ruler. */
+    /** Hides the ruler. */
     hide() {
         this.visualizer.hide();
     }
 
-    /** Temporarily hide the ruler. */
+    /** Temporarily hides the ruler. */
     stash() {
         this.visualizer.stash();
         this.latestPosition = null;
     }
 
     /**
-     * Position the visualizer in the latest position it was in.
+     * Positions the visualizer in the latest position it was in.
      * This is useful after changing visualizers.
      */
     positionAtLatest() {
@@ -185,7 +186,7 @@ class Ruler {
         }
     }
 
-    /** Position and size the ruler to cover a specific rectangle. */
+    /** Positions and sizes the ruler to cover a specific rectangle. */
     positionAt(rect) {
         if (!rectsAreEqual(rect, this.latestPosition)) {
             this.visualizer.positionAt(rect);

@@ -44,7 +44,7 @@ class IframeVisualizer {
     /** Sets the ruler's opacity. */
     setOpacity(newOpacity) { /* do nothing. */ }
 
-    /** Position and size the ruler to cover a specific rectangle. */
+    /** Positions and sizes the ruler to cover a specific rectangle. */
     positionAt(rect) {
         this.sendMessage({
             command: WINDOW_COMMANDS.positionAt,

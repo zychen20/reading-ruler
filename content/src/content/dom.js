@@ -17,6 +17,7 @@
  * along with Reading Ruler.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/** Maps iframe window objects to their iframe elements. */
 const frameCache = {};
 
 /** Gets the iframe element hosting the given window. */

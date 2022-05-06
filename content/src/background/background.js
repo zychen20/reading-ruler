@@ -43,7 +43,7 @@ async function updateIcon(enable) {
 // Read and apply the page's options when it loads.
 browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (tab.status === 'complete' && tab.active) {
-        // Read the options.  This broadcasts them to the content script too.
+        // Read the options.
         const options = new Options(tab.url);
         await options.read();
 

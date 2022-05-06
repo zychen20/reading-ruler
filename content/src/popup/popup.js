@@ -19,7 +19,7 @@
 
 /**
  * This is the entry point for the add-on's "popup" script.  This script
- * executes in the tiny web "page" showing the extenadd-onsion's dropdown menu when
+ * executes in the tiny web "page" showing the add-on's dropdown menu when
  * you click the add-on's icon.
  */
 document.addEventListener('DOMContentLoaded', async () => {

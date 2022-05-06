@@ -71,7 +71,7 @@ class HighlightVisualizer {
         }
     }
 
-    /** Position and size the ruler to cover a specific rectangle. */
+    /** Positions and sizes the ruler to cover a specific rectangle. */
     positionAt(rect) {
         this.element.style.left = rect.x + 'px';
         this.element.style.top = rect.y + 'px';
