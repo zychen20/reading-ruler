@@ -68,11 +68,12 @@
                 break;
             case WINDOW_COMMANDS.positionAt:
                 const frame = frameFromWindow(e.source);
-                const rect = translatedRect(
+                const frameRect = frame.getBoundingClientRect();
+                const rulerRect = translatedRect(
                     e.data.rect,
-                    frame.offsetLeft - window.scrollX,
-                    frame.offsetTop - window.scrollY);
-                ruler.positionAt(rect);
+                    frameRect.left - window.scrollX,
+                    frameRect.top - window.scrollY);
+                ruler.positionAt(rulerRect);
                 break;
             default:
                 break;
