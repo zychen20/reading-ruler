@@ -89,8 +89,12 @@
     });
 
     // Reposition the ruler to match the mouse when the document is scrolled.
-    document.addEventListener('scroll', function(e) {
+    function positionRulerAroundMouse() {
         ruler.positionAround(mousePosition.x, mousePosition.y);
+    }
+
+    document.addEventListener('scroll', function(e) {
+        requestAnimationFrame(positionRulerAroundMouse);
     });
 
     // Deactivate the ruler when the mouse is outside the window.
