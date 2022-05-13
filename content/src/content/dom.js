@@ -18,18 +18,21 @@
  */
 
 /** Maps iframe window objects to their iframe elements. */
-const frameCache = {};
+let frameCache = null;
 
 /** Gets the iframe element hosting the given window. */
 function frameFromWindow(frameWindow) {
-    const cachedFrame = frameCache[frameWindow];
+    const cachedFrame = frameCache && frameCache.get(frameWindow);
     if (cachedFrame) {
         return cachedFrame;
     }
 
     for (const frame of window.document.getElementsByTagName('iframe')) {
         if (frame.contentWindow === frameWindow) {
-            frameCache[frameWindow] = frame;
+            if (!frameCache) {
+                frameCache = new Map();
+            }
+            frameCache.set(frameWindow, frame);
             return frame;
         }
     }

@@ -47,6 +47,7 @@ class IframeVisualizer {
     /** Positions and sizes the ruler to cover a specific rectangle. */
     positionAt(rect) {
         this.sendMessage({
+            guard: WINDOW_MESSAGE_GUARD,
             command: WINDOW_COMMANDS.positionAt,
             rect: rect
         });
@@ -54,6 +55,6 @@ class IframeVisualizer {
 
     /** Sends a message to the parent window. */
     sendMessage(message) {
-        window.parent.postMessage(normalizeMessage(message));
+        window.parent.postMessage(normalizeMessage(message), '*');
     }
 }

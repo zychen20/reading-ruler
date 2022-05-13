@@ -156,6 +156,22 @@ class Ruler {
         this.positionAt(rowBounds);
     }
 
+    /**
+     * Positions and shows the ruler over a rectangle relative to a given
+     * iframe.
+     */
+    positionOnFrame(frameWindow, rect) {
+        const frame = frameFromWindow(frameWindow);
+        const frameRect = frame.getBoundingClientRect();
+        const frameStyle = window.getComputedStyle(frame);
+        const rulerRect = translatedRect(
+            rect,
+            frameRect.left + parseInt(frameStyle.paddingLeft) + parseInt(frameStyle.borderLeftWidth),
+            frameRect.top + parseInt(frameStyle.paddingTop) + parseInt(frameStyle.borderTopWidth));
+        roundRect(rulerRect);
+        this.positionAt(rulerRect);
+    }
+
     // Private methods
 
     /** Shows the ruler. */

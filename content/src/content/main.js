@@ -56,6 +56,10 @@
 
     // React to messages from iframes.
     window.addEventListener('message', e => {
+        if (!e.data || e.data.guard !== WINDOW_MESSAGE_GUARD) {
+            return;
+        }
+
         switch (e.data && e.data.command) {
             case WINDOW_COMMANDS.show:
                 ruler.show();
@@ -67,13 +71,7 @@
                 ruler.stash();
                 break;
             case WINDOW_COMMANDS.positionAt:
-                const frame = frameFromWindow(e.source);
-                const frameRect = frame.getBoundingClientRect();
-                const rulerRect = translatedRect(
-                    e.data.rect,
-                    frameRect.left - window.scrollX,
-                    frameRect.top - window.scrollY);
-                ruler.positionAt(rulerRect);
+                ruler.positionOnFrame(e.source, e.data.rect);
                 break;
             default:
                 break;

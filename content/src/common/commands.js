@@ -31,3 +31,5 @@ const WINDOW_COMMANDS = {
     stash: 'stash',
     positionAt: 'positionAt'
 };
+
+const WINDOW_MESSAGE_GUARD = 'reading-ruler';
