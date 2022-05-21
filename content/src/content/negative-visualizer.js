@@ -19,41 +19,56 @@
 
 /** A ruler visualizer that darkens the page except for the ruler row. */
 class NegativeVisualizer {
-    constructor() {
-        const PREFIX = '--reading-ruler-';
-        const TOP_ID = PREFIX + 'top';
-        const MASK_ID = PREFIX + 'mask';
-        const BOTTOM_ID = PREFIX + 'bottom';
+    static PREFIX = '--reading-ruler-';
+    static TOP_ID = NegativeVisualizer.PREFIX + 'top';
+    static MASK_ID = NegativeVisualizer.PREFIX + 'mask';
+    static BOTTOM_ID = NegativeVisualizer.PREFIX + 'bottom';
 
+    constructor() {
         this.opacity = 0.2;
         this.overlayVisible = true;
         this.rulerVisible = false;
+    }
 
-        this.topElement = document.getElementById(TOP_ID)
+    /** Adds the visualizer's elements into the document. */
+    addToDocument() {
+        this.topElement = document.getElementById(NegativeVisualizer.TOP_ID)
         if (!this.topElement) {
             this.topElement = document.createElement('div');
-            this.topElement.id = TOP_ID;
-            this.topElement.className = TOP_ID;
+            this.topElement.id = NegativeVisualizer.TOP_ID;
+            this.topElement.className = NegativeVisualizer.TOP_ID;
             document.body.appendChild(this.topElement);
         }
 
-        this.maskElement = document.getElementById(MASK_ID);
+        this.maskElement = document.getElementById(NegativeVisualizer.MASK_ID);
         if (!this.maskElement) {
             this.maskElement = document.createElement('div');
-            this.maskElement.id = MASK_ID;
-            this.maskElement.className = MASK_ID;
+            this.maskElement.id = NegativeVisualizer.MASK_ID;
+            this.maskElement.className = NegativeVisualizer.MASK_ID;
             document.body.append(this.maskElement);
         }
 
-        this.bottomElement = document.getElementById(BOTTOM_ID)
+        this.bottomElement = document.getElementById(NegativeVisualizer.BOTTOM_ID)
         if (!this.bottomElement) {
             this.bottomElement = document.createElement('div');
-            this.bottomElement.id = BOTTOM_ID;
-            this.bottomElement.className = BOTTOM_ID;
+            this.bottomElement.id = NegativeVisualizer.BOTTOM_ID;
+            this.bottomElement.className = NegativeVisualizer.BOTTOM_ID;
             document.body.appendChild(this.bottomElement);
         }
 
         this.hide();
+    }
+
+    /** Removes the visualizer's elements from the document. */
+    removeFromDocument() {
+        if (this.topElement) {
+            this.topElement.remove();
+            this.topElement = null;
+            this.maskElement.remove();
+            this.maskElement = null;
+            this.bottomElement.remove();
+            this.bottomElement = null;
+        }
     }
 
     /** Checks if the ruler should be visible in its current state. */

@@ -31,6 +31,8 @@ class Ruler {
         this.latestRowBounds = null;
         this.latestPosition = null;
         this.options = {};
+
+        this.visualizer.addToDocument();
     }
 
     // Public methods
@@ -90,19 +92,23 @@ class Ruler {
         // Keep the new appearance.
         this.appearance = newAppearance;
 
-        // Hide the old visualizer.
-        if (this.visualizer) {
+        // Replace the visualizer, if the new appearance requires it.
+        const newVisualizer = this.forcedVisualizer || Ruler.VISUALIZER_BY_APPEARANCE[newAppearance] || Ruler.VISUALIZER_BY_APPEARANCE["ruler"];
+        if (this.visualizer !== newVisualizer) {
+            // Remove the old visualizer.
             this.visualizer.hide();
-        }
+            this.visualizer.removeFromDocument();
 
-        // Create and initialize a new visualizer to match the new appearance.
-        this.visualizer = this.forcedVisualizer || Ruler.VISUALIZER_BY_APPEARANCE[newAppearance] || Ruler.VISUALIZER_BY_APPEARANCE["ruler"];
-        this.visualizer.setColor(this.options.color);
+            // Bring in the new visualizer.
+            this.visualizer = newVisualizer;
+            this.visualizer.addToDocument();
+        }
 
         // Show and position the new visualizer.
         this.show();
         this.positionAtLatest();
 
+        this.visualizer.setColor(this.options.color);
         this.visualizer.setOpacity(this.options.opacity);
     }
 

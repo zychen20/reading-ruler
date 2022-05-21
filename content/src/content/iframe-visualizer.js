@@ -29,6 +29,12 @@ class IframeVisualizer {
         this.hide();
     }
 
+    /** Adds the visualizer's elements into the document. */
+    addToDocument() { /* do nothing. */ }
+
+    /** Removes the visualizer's elements from the document. */
+    removeFromDocument() { /* do nothing. */ }
+
     /** Shows the ruler. */
     show() { this.sendMessage(WINDOW_COMMANDS.show); }
 

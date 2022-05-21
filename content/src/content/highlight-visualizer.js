@@ -19,22 +19,34 @@
 
 /** A ruler visualizer that highlights text with color. */
 class HighlightVisualizer {
+    static PREFIX = '--reading-ruler-';
+    static RULER_ID = HighlightVisualizer.PREFIX + 'ruler';
+
     constructor() {
-        const PREFIX = '--reading-ruler-';
-        const RULER_ID = PREFIX + 'ruler';
 
         this.opacity = 0.2;
         this.isVisible = true;
+    }
 
-        this.element = document.getElementById(RULER_ID)
+    /** Adds the visualizer's elements into the document. */
+    addToDocument() {
+        this.element = document.getElementById(HighlightVisualizer.RULER_ID)
         if (!this.element) {
             this.element = document.createElement('div');
-            this.element.id = RULER_ID;
-            this.element.className = RULER_ID;
+            this.element.id = HighlightVisualizer.RULER_ID;
+            this.element.className = HighlightVisualizer.RULER_ID;
             document.body.appendChild(this.element);
         }
 
         this.hide();
+    }
+
+    /** Removes the visualizer's elements from the document. */
+    removeFromDocument() {
+        if (this.element) {
+            this.element.remove();
+            this.element = null;
+        }
     }
 
     /** Shows the ruler. */
