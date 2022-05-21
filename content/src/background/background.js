@@ -52,6 +52,16 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     }
 });
 
+// Reapply the page's options when the user switch to a different tab.
+// This ensures the ruler is displayed with the current options even if the page
+// wasn't active when the popup changes the options.
+browser.tabs.onActivated.addListener(async activeInfo => {
+    const tab = await getCurrentTab();
+    const options = new Options(tab.url);
+    await options.read();
+    await options.broadcast();
+});
+
 // Respond to messages from the options popup.
 browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     switch(message.command) {
