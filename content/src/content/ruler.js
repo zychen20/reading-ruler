@@ -24,7 +24,6 @@
 class Ruler {
     constructor(visualizer = null) {
         this.enabled = false;   // enabled unless the user turned it off
-        this.active = false;    // temporarily inactive when the mouse exits the window
         this.appearance = 'ruler';
         this.forcedVisualizer = visualizer;
         this.visualizer = visualizer || new HighlightVisualizer();
@@ -68,19 +67,12 @@ class Ruler {
 
     /** Activates the ruler, if it was temporarily deactivated. */
     activate() {
-        this.active = true;
         this.show();
     }
 
     /** Temporarily deactivates the ruler. */
     deactivate() {
-        this.active = false;
         this.hide();
-    }
-
-    /** Checks if the ruler should be visible in its current state. */
-    isVisible() {
-        return this.enabled && this.active;
     }
 
     /** Sets the ruler's appearance. */
@@ -175,6 +167,7 @@ class Ruler {
             frameRect.left + parseInt(frameStyle.paddingLeft) + parseInt(frameStyle.borderLeftWidth),
             frameRect.top + parseInt(frameStyle.paddingTop) + parseInt(frameStyle.borderTopWidth));
         roundRect(rulerRect);
+        this.activate();
         this.positionAt(rulerRect);
     }
 
@@ -182,7 +175,7 @@ class Ruler {
 
     /** Shows the ruler. */
     show() {
-        if (this.isVisible()) {
+        if (this.enabled) {
             this.visualizer.show();
         }
     }

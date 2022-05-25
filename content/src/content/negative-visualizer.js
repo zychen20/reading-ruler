@@ -24,10 +24,23 @@ class NegativeVisualizer {
     static MASK_ID = NegativeVisualizer.PREFIX + 'mask';
     static BOTTOM_ID = NegativeVisualizer.PREFIX + 'bottom';
 
+    static Visibility = {
+        SHOW: 1,
+        HIDE: 2,
+        STASH: 3,
+
+        showOverlay(visibility) {
+            return visibility === NegativeVisualizer.Visibility.SHOW || visibility == NegativeVisualizer.Visibility.STASH;
+        },
+
+        showMask(visibility) {
+            return visibility === NegativeVisualizer.Visibility.STASH;
+        }
+    };
+
     constructor() {
         this.opacity = 0.2;
-        this.overlayVisible = true;
-        this.rulerVisible = false;
+        this.visibility = NegativeVisualizer.Visibility.STASH;
     }
 
     /** Adds the visualizer's elements into the document. */
@@ -68,42 +81,51 @@ class NegativeVisualizer {
             this.maskElement = null;
             this.bottomElement.remove();
             this.bottomElement = null;
-        }
-    }
 
-    /** Checks if the ruler should be visible in its current state. */
-    isVisible() {
-        return this.overlayVisible || this.rulerVisible;
+            this.visibility = NegativeVisualizer.Visibility.HIDE;
+        }
     }
 
     /** Shows the ruler. */
     show() {
-        if (!this.overlayVisible) {
+        if (!NegativeVisualizer.Visibility.showOverlay(this.visibility)) {
             this.topElement.style.opacity = this.opacity;
-            this.maskElement.style.opacity = 0;
             this.bottomElement.style.opacity = this.opacity;
-
-            this.overlayVisible = true;
         }
+
+        if (NegativeVisualizer.Visibility.showMask(this.visibility)) {
+            this.maskElement.style.opacity = 0;
+        }
+
+        this.visibility = NegativeVisualizer.Visibility.SHOW;
     }
 
     /** Hides the ruler. */
     hide() {
-        if (this.overlayVisible) {
+        if (NegativeVisualizer.Visibility.showOverlay(this.visibility)) {
             this.topElement.style.opacity = 0;
-            this.maskElement.style.opacity = 0;
             this.bottomElement.style.opacity = 0;
-
-            this.overlayVisible = false;
         }
+
+        if (NegativeVisualizer.Visibility.showMask(this.visibility)) {
+            this.maskElement.style.opacity = 0;
+        }
+
+        this.visibility = NegativeVisualizer.Visibility.HIDE;
     }
 
     /** Temporarily hides the ruler. */
     stash() {
-        this.topElement.style.opacity = this.opacity;
-        this.maskElement.style.opacity = this.opacity;
-        this.bottomElement.style.opacity = this.opacity;
-        this.rulerVisible = false;
+        if (!NegativeVisualizer.Visibility.showOverlay(this.visibility)) {
+            this.topElement.style.opacity = this.opacity;
+            this.bottomElement.style.opacity = this.opacity;
+        }
+
+        if (!NegativeVisualizer.Visibility.showMask(this.visibility)) {
+            this.maskElement.style.opacity = this.opacity;
+        }
+
+        this.visibility = NegativeVisualizer.Visibility.STASH;
     }
 
     /** Sets the ruler's color. */
@@ -114,10 +136,14 @@ class NegativeVisualizer {
     /** Sets the ruler's opacity. */
     setOpacity(newOpacity) {
         this.opacity = newOpacity;
-        if (this.overlayVisible) {
+
+        if (NegativeVisualizer.Visibility.showOverlay(this.visibility)) {
             this.topElement.style.opacity = newOpacity;
-            this.maskElement.style.opacity = newOpacity;
             this.bottomElement.style.opacity = newOpacity;
+        }
+
+        if (NegativeVisualizer.Visibility.showMask(this.visibility)) {
+            this.maskElement.style.opacity = newOpacity;
         }
     }
 
@@ -141,7 +167,9 @@ class NegativeVisualizer {
         this.bottomElement.style.width = widthPx;
         this.bottomElement.style.height = (window.innerHeight - rect.y - rect.height) + 'px';
 
-        this.rulerVisible = true;
+        if (this.visibility === NegativeVisualizer.Visibility.STASH) {
+            this.visibility = NegativeVisualizer.Visibility.SHOW;
+        }
         this.lastPosition = rect;
     }
 }

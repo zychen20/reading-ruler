@@ -23,7 +23,6 @@ class HighlightVisualizer {
     static RULER_ID = HighlightVisualizer.PREFIX + 'ruler';
 
     constructor() {
-
         this.opacity = 0.2;
         this.isVisible = true;
     }
