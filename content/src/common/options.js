@@ -26,7 +26,7 @@ class Options {
 
     /** Should the add-on be enabled for the page? */
     get enabled() {
-        return this.domainEnabled && this.pageEnabled;
+        return this.addonEnabled && this.domainEnabled && this.pageEnabled;
     }
 
     /** Gets the hex value of the ruler color. */
@@ -36,6 +36,7 @@ class Options {
 
     /** Reads the options from local storage. */
     async read() {
+        this.addonEnabled = !!await this.readValue('addonEnabled', true);
         this.domainEnabled = !!await this.readValue(this.host, true);
         this.pageEnabled = !!await this.readValue(this.url, true);
         this.appearance = await this.readValue('appearance', 'ruler');
@@ -45,6 +46,7 @@ class Options {
 
     /** Writes the options to local storage. */
     async write() {
+        await this.writeValue('addonEnabled', this.addonEnabled);
         await this.writeValue(this.host, this.domainEnabled);
         await this.writeValue(this.url, this.pageEnabled);
         await this.writeValue('appearance', this.appearance);

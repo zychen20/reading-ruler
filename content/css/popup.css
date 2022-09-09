@@ -17,7 +17,9 @@
  * along with Reading Ruler.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+ /* Light color scheme */
 @media (prefers-color-scheme: light) {
+    /* Body and heading colors, regular and disabled. */
     body {
         background: #f9f9fb;
         color: #445;
@@ -27,17 +29,48 @@
         color: black;
     }
 
-    .color-radio input[type="radio"]:hover + label,
+    div.disabled h1, div.disabled h2, div.disabled h3, div.disabled h4 {
+        color: #666;
+    }
+
+    /* Switch-shaped checkbox colors */
+    div.switch input[type="checkbox"]:not(:checked) + span::before {
+        background-color: #aaa;
+    }
+
+    div.switch label:hover input[type="checkbox"]:checked + span::before {
+        background-color: #7b4;
+    }
+
+    div.switch label:hover input[type="checkbox"]:not(:checked) + span::before {
+        background-color: #9a8;
+    }
+
+    div.switch label:hover span {
+        color: black;
+        text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Color chooser radio button colors */
+    .color-radio input[type="radio"]:not([disabled]):not(:checked):hover + label,
     .color-radio input[type="radio"]:checked + label {
         border-color: black;
     }
 
-    div.checkbox span:hover {
+    /* Regular checkbox colors */
+    div.checkbox input[type="checkbox"]:not([disabled]) + span:hover {
         color: black;
+        text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    div.disabled div.checkbox span {
+        color: #aaa;
     }
 }
 
+/* Dark color scheme */
 @media (prefers-color-scheme: dark) {
+    /* Body and heading colors, regular and disabled. */
     body {
         background: #333;
         color: #ddd;
@@ -47,13 +80,42 @@
         color: white;
     }
 
-    .color-radio input[type="radio"]:hover + label,
+    div.disabled h1, div.disabled h2, div.disabled h3, div.disabled h4 {
+        color: #888;
+    }
+
+    /* Switch-shaped checkbox colors */
+    div.switch input[type="checkbox"]:not(:checked) + span::before {
+        background-color: #666;
+    }
+
+    div.switch label:hover input[type="checkbox"]:checked + span::before {
+        background-color: #7b4;
+    }
+
+    div.switch label:hover input[type="checkbox"]:not(:checked) + span::before {
+        background-color: #786;
+    }
+
+    div.switch label:hover span {
+        color: white;
+        text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.7);
+    }
+
+    /* Color chooser radio button colors */
+    .color-radio input[type="radio"]:not([disabled]):not(:checked):hover + label,
     .color-radio input[type="radio"]:checked + label {
         border-color: white;
     }
 
-    div.checkbox span:hover {
+    /* Regular checkbox colors */
+    div.checkbox input[type="checkbox"]:not([disabled]) + span:hover {
         color: white;
+        text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.7);
+    }
+
+    div.disabled div.checkbox span {
+        color: #666;
     }
 }
 
@@ -63,6 +125,10 @@ body {
     font-weight: 400;
     margin: 24px;
     user-select: none;
+}
+
+h1, h2, h3, h4 {
+    transition: color 200ms;
 }
 
 h1 {
@@ -83,9 +149,97 @@ h3 {
 h4 {
     font-size: 14px;
     font-weight: 600;
-    margin: 12px 0 8px 0;
+    margin: 24px 0 6px 0;
 }
 
+div.indent {
+    margin-left: 12px;
+}
+
+/* Switch-shaped checkbox */
+
+div.switch {
+    margin-bottom: 18px;
+}
+
+div.switch label {
+    position: relative;
+}
+
+div.switch input[type="checkbox"] {
+    position: absolute;
+    left: -5000px;
+}
+
+/* Switch-shaped checkbox: background and text */
+div.switch input[type="checkbox"] + span::before {
+    content: 'OFF';
+    position: absolute;
+    left: 0px;
+    top: -8px;
+    width: 45px;
+    height: 18px;
+    padding: 8px 18px;
+    border-radius: 40px;
+
+    background-color: #bbb;
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-weight: bold;
+    text-align: right;
+
+    transition: 200ms;
+}
+
+div.switch input[type="checkbox"]:checked + span::before {
+    content: 'ON';
+    text-align: left;
+    background-color: #6aa630;
+}
+
+div.switch label:hover input[type="checkbox"] + span::before {
+    box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Switch-shaped checkbox: bubble */
+div.switch input[type="checkbox"] + span::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: -3px;
+    width: 24px;
+    height: 24px;
+    border-radius: 30px;
+
+    background: white;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+
+    transition: 200ms;
+}
+
+div.switch input[type="checkbox"]:checked + span::after {
+    transform: translate(45px);
+}
+
+div.switch label:hover input[type="checkbox"] + span::after {
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+div.switch label:hover input[type="checkbox"]:checked + span::after {
+    transform: translate(43px);
+}
+
+div.switch label:hover input[type="checkbox"]:not(:checked) + span::after {
+    transform: translate(2px);
+}
+
+/* Switch-shaped checkbox: label to the right */
+div.switch label span {
+    display: inline-block;
+    margin-left: 88px;
+}
+
+/* Color radio buttons */
 .color-radio {
     margin: 0;
 }
@@ -102,6 +256,8 @@ h4 {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: white;
     border: none;
+
+    transition: filter 200ms;
 }
 
 .color-radio label::after {
@@ -117,7 +273,7 @@ h4 {
     position: absolute;
 }
 
-.color-radio input[type="radio"]:hover + label {
+.color-radio input[type="radio"]:not([disabled]):not(:checked):hover + label {
     width: 32px;
     height: 32px;
     margin: 0 6px 0 0;
@@ -135,6 +291,16 @@ h4 {
     border-width: 3px;
 }
 
+div.disabled .color-radio label {
+    filter: grayscale(1) opacity(0.5);
+}
+
+/* Regular checkboxes */
+div.checkbox span {
+    transition: color 200ms;
+}
+
+/* The opacity slider */
 #opacitySlider {
     width: 220px;
 }

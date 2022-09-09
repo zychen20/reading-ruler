@@ -69,6 +69,7 @@ class NegativeVisualizer {
             document.body.appendChild(this.bottomElement);
         }
 
+        this.positionAt({ x: 0, y: 0, width: 0, height: 0 });
         this.hide();
     }
 
@@ -170,6 +171,5 @@ class NegativeVisualizer {
         if (this.visibility === NegativeVisualizer.Visibility.STASH) {
             this.visibility = NegativeVisualizer.Visibility.SHOW;
         }
-        this.lastPosition = rect;
     }
 }

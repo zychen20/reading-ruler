@@ -7,6 +7,10 @@
         "message": "Highlights the row of text you are reading.",
         "description": "Description of the extension"
     },
+    "enableReadingRuler": {
+        "message": "Enable Reading Ruler",
+        "description": "Enable Reading Ruler checkbox"
+    },
     "colorHeading": {
         "message": "Color",
         "description": "Heading of the popup's color section"
@@ -14,10 +18,6 @@
     "opacityHeading": {
         "message": "Opacity",
         "description": "Heading of the popup's opacity section"
-    },
-    "whenToShowHeading": {
-        "message": "When to show the ruler",
-        "description": "Heading of the popup's when-to-show section"
     },
     "showOnThisPage": {
         "message": "Show on this page",

@@ -26,19 +26,24 @@ along with Reading Ruler.  If not, see <https://www.gnu.org/licenses/>.
         <script type="text/javascript" src="/src/common/commands.js"></script>
         <script type="text/javascript" src="/src/common/extension.js"></script>
         <script type="text/javascript" src="/src/common/options.js"></script>
+        <script type="text/javascript" src="/src/popup/color-chooser.js"></script>
         <script type="text/javascript" src="/src/popup/popup.js"></script>
     </head>
     <body>
         <h3 id="popupHeading">Reading Ruler</h3>
+        <div class="switch"><label><input type="checkbox" id="addonEnabled" name="addonEnabled" value="value"><span id="addonEnabledText">Enable Reading Ruler</span></label></div>
 
-        <h4 id="colorHeading">Color</h4>
-        <div class="color-radio" id="colorButtons"></div>
+        <div id="form">
+            <div class="indent">
+                <div class="checkbox"><label><input type="checkbox" id="enableForPage" name="enableForPage" value="value"><span id="enableForPageText">Show on this page</span></label></div>
+                <div class="checkbox"><label><input type="checkbox" id="enableForDomain" name="enableForDomain" value="value"><span id="enableForDomainText">Show on all pages of this site</span></label></div>
+            </div>
 
-        <h4 id="opacityHeading">Opacity</h4>
-        <div><input type="range" min="0.1" max="0.5" step="0.1" value="0.2" id="opacitySlider"></div>
+            <h4 id="colorHeading">Color</h4>
+            <div class="color-radio" id="colorButtons"></div>
 
-        <h4 id="whenToShowHeading">When to show the ruler</h4>
-        <div class="checkbox"><label><input type="checkbox" id="enableForPage" name="enableForPage" value="value"><span id="enableForPageText">Show on this page</span></label></div>
-        <div class="checkbox"><label><input type="checkbox" id="enableForDomain" name="enableForDomain" value="value"><span id="enableForDomainText">Show on all pages of this site</span></label></div>
+            <h4 id="opacityHeading">Opacity</h4>
+            <div><input type="range" min="0.1" max="0.5" step="0.1" value="0.2" id="opacitySlider"></div>
+        </div>
     </body>
 </html>

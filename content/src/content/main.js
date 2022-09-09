@@ -78,14 +78,34 @@
         }
     });
 
-    // Reposition the ruler when the mouse moves.
+    /**
+     * Activates the ruler.  Use this inside requestAnimationFrame() to avoid
+     * creating a new bound instance of ruler.activate upon each animation frame.
+     */
+    function activateRuler() {
+        ruler.activate();
+    }
+
+    /**
+     * Deactivates the ruler.  Use this inside requestAnimationFrame() to avoid
+     * creating a new bound instance of ruler.deactivate upon each animation frame.
+     */
+     function deactivateRuler() {
+        ruler.deactivate();
+    }
+
+    /** Repositions the ruler when the mouse moves. */
+    function positionRulerAroundMouseIfRowExited() {
+        ruler.positionAroundIfRowExited(mousePosition.x, mousePosition.y);
+    }
+
     document.addEventListener('mousemove', function(e) {
         // Keep track of the mouse position.
         mousePosition.x = e.x;
         mousePosition.y = e.y;
 
         // Position the ruler to match the mouse position.
-        ruler.positionAroundIfRowExited(mousePosition.x, mousePosition.y);
+        requestAnimationFrame(positionRulerAroundMouseIfRowExited);
     });
 
     // Reposition the ruler to match the mouse when the document is scrolled.
@@ -100,15 +120,15 @@
     // Deactivate the ruler when the mouse is outside the window.
     window.addEventListener('mouseout', e => {
         if (!e.relatedTarget) {
-            ruler.deactivate();
+            requestAnimationFrame(deactivateRuler);
         }
     });
     window.addEventListener('mouseover', e => {
         if (!e.relatedTarget) {
-            ruler.activate();
+            requestAnimationFrame(activateRuler);
         }
     });
-    window.addEventListener('click', e => ruler.activate());
+    window.addEventListener('click', e => requestAnimationFrame(activateRuler));
 
     // Enable and style the ruler based on page options.
     const options = new Options(window.location.href);
