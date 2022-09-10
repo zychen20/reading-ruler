@@ -28,6 +28,15 @@
     "show_matches": ["http://*/*", "https://*/*"]
   },
 
+  "commands": {
+    "toggle-addon": {
+      "suggested_key": {
+        "default": "Alt+R"
+      },
+      "description": "Toggle Reading Ruler on or off"
+    }
+  },
+
   "background": {
     "scripts": [
       "src/polyfills/browser-polyfill.min.js",

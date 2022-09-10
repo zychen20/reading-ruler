@@ -103,7 +103,7 @@ class Popup {
  */
 document.addEventListener('DOMContentLoaded', async () => {
     // Activate the ruler when the popup is shown.
-    broadcast(EXTENSION_COMMANDS.activate);
+    broadcast(INTERNAL_EXTENSION_COMMANDS.activate);
 
     // Read the add-on's options.
     const tab = await getCurrentTab();
@@ -113,16 +113,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const popup = new Popup(options);
 
+    // Update the state of the popup controls when an options update is received
+    // from the background script.  This can happen when the background script
+    // receives a hotkey command.
+    browser.runtime.onMessage.addListener(async message => {
+        switch (message.command) {
+            case INTERNAL_EXTENSION_COMMANDS.options:
+                const options = new Options(tab.url);
+                await options.read();
+                popup.applyOptions(options);
+                break;
+            default:
+                break;
+        }
+    });
+
     // Activate the ruler when entering the popup.  This gives direct feedback
     // to what option changes look like, and counters the deactivation of the
     // ruler when the mouse exits the window to open the popup.
-    document.documentElement.addEventListener('mouseenter', e => broadcast(EXTENSION_COMMANDS.activate));
-    document.documentElement.addEventListener('mouseleave', e => broadcast(EXTENSION_COMMANDS.deactivate));
+    document.documentElement.addEventListener('mouseenter', e => broadcast(INTERNAL_EXTENSION_COMMANDS.activate));
+    document.documentElement.addEventListener('mouseleave', e => broadcast(INTERNAL_EXTENSION_COMMANDS.deactivate));
 
     // Deactivate the ruler when the popup closes.
     window.addEventListener('blur', e => {
         if (e.target === window) {
-            broadcast(EXTENSION_COMMANDS.deactivate);
+            broadcast(INTERNAL_EXTENSION_COMMANDS.deactivate);
         }
     });
 }, false);

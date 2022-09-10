@@ -17,8 +17,13 @@
  * along with Reading Ruler.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/** Commands bound to hotkeys in manifest.json */
+const MANIFEST_EXTENSION_COMMANDS = {
+    toggleAddon: 'toggle-addon'
+};
+
 /** Commands passed between content, background and popup scripts. */
-const EXTENSION_COMMANDS = {
+const INTERNAL_EXTENSION_COMMANDS = {
     activate: 'activate',
     deactivate: 'deactivate',
     options: 'options',

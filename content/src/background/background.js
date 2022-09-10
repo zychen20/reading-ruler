@@ -52,7 +52,7 @@ browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     }
 });
 
-// Reapply the page's options when the user switch to a different tab.
+// Reapply the page's options when the user switches to a different tab.
 // This ensures the ruler is displayed with the current options even if the page
 // wasn't active when the popup changes the options.
 browser.tabs.onActivated.addListener(async activeInfo => {
@@ -62,10 +62,27 @@ browser.tabs.onActivated.addListener(async activeInfo => {
     await options.broadcast();
 });
 
+// Respond to hot-key commands, as specified in manifest.json.
+browser.commands.onCommand.addListener(async command => {
+    switch (command) {
+        // Toggle the add-on's on/off state
+        case MANIFEST_EXTENSION_COMMANDS.toggleAddon:
+            const tab = await getCurrentTab();
+            const options = new Options(tab.url);
+            await options.read();
+            options.addonEnabled = !options.addonEnabled;
+            await options.write();
+            await updateIcon(options.enabled);
+            break;
+        default:
+            break;
+    }
+});
+
 // Respond to messages from the options popup.
 browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     switch(message.command) {
-        case EXTENSION_COMMANDS.options:
+        case INTERNAL_EXTENSION_COMMANDS.options:
             await updateIcon(message.enabled);
             break;
         default:

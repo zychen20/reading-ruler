@@ -60,7 +60,7 @@ class Options {
     /** Broadcasts the option values throughout the add-on. */
     async broadcast() {
         await broadcast({
-            command: EXTENSION_COMMANDS.options,
+            command: INTERNAL_EXTENSION_COMMANDS.options,
             ...this.snap()
         });
     }

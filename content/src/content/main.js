@@ -40,13 +40,13 @@
     // React to messages from the background and popup scripts.
     browser.runtime.onMessage.addListener(message => {
         switch (message.command) {
-            case EXTENSION_COMMANDS.activate:
+            case INTERNAL_EXTENSION_COMMANDS.activate:
                 ruler.activate();
                 break;
-            case EXTENSION_COMMANDS.deactivate:
+            case INTERNAL_EXTENSION_COMMANDS.deactivate:
                 ruler.deactivate();
                 break;
-            case EXTENSION_COMMANDS.options:
+            case INTERNAL_EXTENSION_COMMANDS.options:
                 ruler.applyOptions(message);
                 break;
             default:
