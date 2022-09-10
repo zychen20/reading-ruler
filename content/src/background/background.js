@@ -60,6 +60,7 @@ browser.tabs.onActivated.addListener(async activeInfo => {
     const options = new Options(tab.url);
     await options.read();
     await options.broadcast();
+    await updateIcon(options.enabled);
 });
 
 // Respond to hot-key commands, as specified in manifest.json.
