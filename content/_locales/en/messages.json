@@ -7,9 +7,13 @@
         "message": "Highlights the row of text you are reading.",
         "description": "Description of the extension"
     },
-    "enableReadingRuler": {
+    "addonEnabledText": {
         "message": "Enable Reading Ruler",
         "description": "Enable Reading Ruler checkbox"
+    },
+    "hotkeyInfo": {
+        "message": "You can also use the Alt+R hotkey to enable and disable Reading Ruler.",
+        "description": "A message telling the user about the hotkey for the add-on."
     },
     "colorHeading": {
         "message": "Color",

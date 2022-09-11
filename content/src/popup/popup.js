@@ -56,7 +56,8 @@ class Popup {
 
     loadI18nStrings() {
         document.getElementById('popupHeading').innerText = browser.i18n.getMessage('extensionName');
-        document.getElementById('addonEnabledText').innerText = browser.i18n.getMessage('enableReadingRuler');
+        document.getElementById('addonEnabledText').innerText = browser.i18n.getMessage('addonEnabledText');
+        document.getElementById('hotkeyInfo').innerText = browser.i18n.getMessage('hotkeyInfo');
         document.getElementById('colorHeading').innerText = browser.i18n.getMessage('colorHeading');
         document.getElementById('opacityHeading').innerText = browser.i18n.getMessage('opacityHeading');
         document.getElementById('enableForPageText').innerText = browser.i18n.getMessage('showOnThisPage');

@@ -152,6 +152,17 @@ h4 {
     margin: 24px 0 6px 0;
 }
 
+div.preamble {
+    width: min-content;
+}
+
+p.info {
+    margin: 3pt 0 12pt 12pt;
+    font-style: italic;
+    word-wrap: break-word;
+    opacity: 0.8;
+}
+
 div.indent {
     margin-left: 12px;
 }
@@ -160,6 +171,7 @@ div.indent {
 
 div.switch {
     margin-bottom: 18px;
+    white-space: nowrap;
 }
 
 div.switch label {
