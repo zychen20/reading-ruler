@@ -18,17 +18,10 @@
  */
 
 class Popup {
-    constructor(options) {
+    constructor() {
         // Initialize and react to changes on the enable-add-on checkbox.
         this.enableAddonCheckbox = document.getElementById('addonEnabled');
         this.enableAddonCheckbox.addEventListener('change', this.onEnableAddonCheckboxChanged.bind(this));
-
-        // Initialize and react to changes on the color chooser.
-        this.colorChooser = new ColorChooser(options);
-
-        // Initialize and react to changes on the opacity slider.
-        this.opacitySlider = document.getElementById('opacitySlider');
-        this.opacitySlider.addEventListener('input', this.onOpacitySliderMoved.bind(this));
 
         // Initialize and react to changes on the enable-for-domain checkbox.
         this.enableForDomainCheckbox = document.getElementById('enableForDomain');
@@ -38,7 +31,13 @@ class Popup {
         this.enableForPageCheckbox = document.getElementById('enableForPage');
         this.enableForPageCheckbox.addEventListener('change', this.onEnableForPageCheckboxChanged.bind(this));
 
-        this.applyOptions(options);
+        // Initialize and react to changes on the color chooser.
+        this.colorChooser = new ColorChooser(document.getElementById('colorButtons'));
+        this.colorChooser.addEventListener('choose', this.onChooseColor.bind(this));
+
+        // Initialize and react to changes on the opacity slider.
+        this.opacitySlider = document.getElementById('opacitySlider');
+        this.opacitySlider.addEventListener('input', this.onOpacitySliderMoved.bind(this));
     }
 
     applyOptions(options) {
@@ -47,54 +46,70 @@ class Popup {
         this.loadI18nStrings();
 
         this.enableAddonCheckbox.checked = options.addonEnabled;
-        this.opacitySlider.value = options.opacity;
         this.enableForDomainCheckbox.checked = options.domainEnabled;
         this.enableForPageCheckbox.checked = options.pageEnabled;
+        this.colorChooser.chooseColor(options.colorName);
+        this.opacitySlider.value = options.opacity;
 
         this.enableElements();
     }
 
+    /** Loads user-visible text from the locale-specific messages.json. */
     loadI18nStrings() {
         document.getElementById('popupHeading').innerText = browser.i18n.getMessage('extensionName');
         document.getElementById('addonEnabledText').innerText = browser.i18n.getMessage('addonEnabledText');
         document.getElementById('hotkeyInfo').innerText = browser.i18n.getMessage('hotkeyInfo');
-        document.getElementById('colorHeading').innerText = browser.i18n.getMessage('colorHeading');
-        document.getElementById('opacityHeading').innerText = browser.i18n.getMessage('opacityHeading');
         document.getElementById('enableForPageText').innerText = browser.i18n.getMessage('showOnThisPage');
         document.getElementById('enableForDomainText').innerText = browser.i18n.getMessage('showOnAllPagesOf', this.options.host);
+        document.getElementById('colorHeading').innerText = browser.i18n.getMessage('colorHeading');
+        document.getElementById('opacityHeading').innerText = browser.i18n.getMessage('opacityHeading');
     }
 
+    /** Enables form controls based on the state of the enable-addon checkbox. */
     enableElements() {
         document.getElementById('form').classList.toggle('disabled', !this.options.addonEnabled);
-        this.colorChooser.disabled = !this.options.addonEnabled;
-        this.opacitySlider.disabled = !this.options.addonEnabled;
         this.enableForDomainCheckbox.disabled = !this.options.addonEnabled;
         this.enableForPageCheckbox.disabled = !this.options.addonEnabled;
+        this.colorChooser.disabled = !this.options.addonEnabled;
+        this.opacitySlider.disabled = !this.options.addonEnabled;
     }
 
+    /** Reacts to changed of the enable-addon checkbox. */
     async onEnableAddonCheckboxChanged(e) {
         this.options.addonEnabled = e.target.checked;
         await this.options.write();
         this.enableElements();
     }
 
-    async onOpacitySliderMoved(e) {
-        this.options.opacity = this.opacitySlider.value;
-        await this.options.write();
-    }
-
-    // Initialize and react to changes on the enable-for-domain checkbox.
+    /** Reacts to changes of the enable-for-domain checkbox. */
     async onEnableForDomainCheckboxChanged(e) {
         this.options.domainEnabled = e.target.checked;
         await this.options.write();
     }
 
-    // Initialize and react to changes on the enable-for-page checkbox.
+    /** Reacts to changes of the enable-for-page checkbox. */
     async onEnableForPageCheckboxChanged(e) {
         this.options.pageEnabled = e.target.checked;
         await this.options.write();
     }
 
+    /** Called when the user chooses a color. */
+    async onChooseColor(e) {
+        if (this.options.addonEnabled) {
+            const color = COLORS.find(nextColor => nextColor.name === e.colorName);
+            if (color) {
+                this.options.colorName = e.colorName;
+                this.options.appearance = color.appearance;
+                await this.options.write();
+            }
+        }
+    }
+
+    /** Reacts to changes of the opacity slider. */
+    async onOpacitySliderMoved(e) {
+        this.options.opacity = this.opacitySlider.value;
+        await this.options.write();
+    }
 }
 
 /**
@@ -112,7 +127,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await options.read();
     await options.broadcast();
 
-    const popup = new Popup(options);
+    const popup = new Popup();
+    popup.applyOptions(options);
 
     // Update the state of the popup controls when an options update is received
     // from the background script.  This can happen when the background script

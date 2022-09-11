@@ -17,23 +17,27 @@
  * along with Reading Ruler.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/** A UI component for choosing a color from a short list of named colors. */
 class ColorChooser {
-    constructor(options) {
-        this.options = options;
+    constructor(element) {
+        this.element = element;
         this.inputs = [];
+        this.chooseHandlers = [];
 
-        const colorButtons = document.getElementById('colorButtons');
+        // Create a radio button for each color.
         for (let color of COLORS) {
+            // Create a radio button for the color.
             const input = document.createElement('input');
             input.type = 'radio';
             input.name = 'color';
             input.id = 'color' + color.name;
             input.value = color.name;
-            input.checked = color.name === options.colorName;
 
             this.inputs.push(input);
-            colorButtons.appendChild(input);
+            this.element.appendChild(input);
 
+            // Create a label for the radio button.  The label renders the color
+            // or icon if the color has an icon associated with it.
             const label = document.createElement('label');
             label.htmlFor = input.id;
             label.style = `background-color: ${color.hex};`;
@@ -46,20 +50,38 @@ class ColorChooser {
             } else {
                 label.innerText = ' ';
             }
-            label.addEventListener('click', async e => {
-                if (options.addonEnabled) {
-                    options.colorName = e.target.previousSibling.value;
-                    options.appearance = color.appearance;
-                    await options.write();
-                }
-            });
-            colorButtons.appendChild(label);
+            label.addEventListener('click', this.onClick.bind(this));
+            this.element.appendChild(label);
         }
     }
 
     set disabled(value) {
         for (const input of this.inputs) {
             input.disabled = value;
+        }
+    }
+
+    /** Selects the specified color in the chooser's UI. */
+    chooseColor(colorName) {
+        for (const input of this.inputs) {
+            input.checked = input.value === colorName;
+        }
+    }
+
+    /** Registers for events. */
+    addEventListener(eventName, handler) {
+        switch (eventName) {
+            case 'choose':
+                this.chooseHandlers.push(handler);
+                break;
+            default: throw new Error("Unrecognized event name.");
+        }
+    }
+
+    /** Reacts to clicks on color radio buttons. */
+    async onClick(e) {
+        for (const handler of this.chooseHandlers) {
+            handler({ colorName: e.target.previousSibling.value });
         }
     }
 }
