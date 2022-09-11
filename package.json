@@ -1,6 +1,6 @@
 {
   "name": "reading-ruler",
-  "version": "1.7",
+  "version": "1.8",
   "description": "A browser add-on to highlight the row of text you are reading.",
   "main": "main.js",
   "homepage": "https://addons.mozilla.org/en-US/firefox/addon/readingruler",
@@ -14,18 +14,18 @@
   },
   "devDependencies": {
     "@types/download": "^8.0.1",
-    "body-parser": "1.19.1",
+    "body-parser": "1.20.0",
     "cpx": "^1.5.0",
     "download": "^8.0.0",
-    "express": "4.17.2",
+    "express": "4.18.1",
     "safe-compare": "^1.1.4",
-    "web-ext": "^6.8.0",
-    "webextension-polyfill": "^0.9.0"
+    "web-ext": "^7.2.0",
+    "webextension-polyfill": "^0.10.0"
   },
   "resolutions": {
     "ws": "^7.4.6"
   },
   "dependencies": {
-    "ws": "^7.4.6"
+    "ws": "^8.8.1"
   }
 }
