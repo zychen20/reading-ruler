@@ -17,7 +17,7 @@
     "128": "icons/ruler-128.png"
   },
 
-  "page_action": {
+  "browser_action": {
     "browser_style": true,
     "default_icon": {
       "48": "icons/ruler-48.png",
