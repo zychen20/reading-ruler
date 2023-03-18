@@ -28,17 +28,6 @@ const DISABLED_ICON = {
     "128": "/icons/ruler-disabled-128.png"
 };
 
-/** Updates the add-on's icon to reflect its enabled state. */
-async function updateIcon(enable) {
-    const tab = await getCurrentTab();
-    const tabId = tab && tab.id;
-    if (tabId != null) {
-        await browser.pageAction.setIcon({
-            path: enable ? DEFAULT_ICON : DISABLED_ICON,
-            tabId: tabId
-        });
-    }
-}
 
 // Read and apply the page's options when it loads.
 browser.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
